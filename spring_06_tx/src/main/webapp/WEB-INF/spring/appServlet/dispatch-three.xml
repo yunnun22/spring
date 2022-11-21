@@ -5,10 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
-	<!-- TransactionTemplate을 이용한 트랜잭션 처리 -->
+	<!-- annotation을 이용한 트랜잭션 처리 -->
 
 	<!-- [2] SqlSessionFactoryBean 빈 선언 -->
-	<bean id="SqlSessionFactory"
+	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations">
@@ -17,26 +17,24 @@
 			</list>
 		</property>
 	</bean>
-	<!-- [3] SqlSessionTemplate 빈선언 -->
+
+	<!-- [3] SqlSessionTemplate 빈 선언 -->
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="SqlSessionFactory" />
+		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 
-	<!-- Spring JDBC나 mybatis를 이용해서 DB연동을 처리하는 경우 DataSourceTransactionManager이 
-		트랜잭션 관리자로 사용된다. -->
+	<!-- Spring JDBC나 Mybatis를 이용해서 DB연동을 처리하는 경우 DataSourceTransaction이 트랜잭션 
+		관리자로 사용된다. -->
 
-	<!-- [4] TransactionManager빈 선언 -->
+	<!-- [4] TransactionManager 빈 선언 -->
 	<bean id="transactionManager"
 		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-	<!-- [5] TransactionTemplate 빈 선언 -->
-	<bean id="transactionTemplate"
-		class="org.springframework.transaction.support.TransactionTemplate">
-		<property name="transactionManager" ref="transactionManager" />
-	</bean>
+	<!-- [5] 선언적 트랜잭션: annotation을 이용한 트랜잭션 처리 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 	<!-- [6] MemDaoImp빈선언 -->
 	<bean id="dao" class="model.MemDaoImp">
@@ -44,14 +42,15 @@
 	</bean>
 
 	<!-- [7]ServiceImp빈선언 -->
-	<bean id="service" class="part01.ServiceImp">
+	<bean id="service" class="part03.ServiceImp">
 		<property name="memDAO" ref="dao" />
-		<property name="transactionTemplate"
-			ref="transactionTemplate" />
+
 	</bean>
 
 	<!-- [8] MemController 빈선언 -->
-	<bean class="part01.MemController">
+	<bean class="part03.MemController">
 		<property name="svc" ref="service" />
 	</bean>
+
+
 </beans>
