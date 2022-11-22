@@ -1,6 +1,6 @@
 package dto;
 
-public class pageDTO {
+public class PageDTO {
 
 private int currentPage;//현재페이지
 private int totalCount;//총 레코드 수
@@ -16,11 +16,11 @@ private int number;
 private String searchKey;
 private String searchWord;
 
-public pageDTO() {
+public PageDTO() {
 	
 }
 
-public pageDTO(int currentPage, int totalCount) {
+public PageDTO(int currentPage, int totalCount) {
 	this.currentPage = currentPage;
 	this.totalCount = totalCount;
 	
@@ -45,9 +45,9 @@ public pageDTO(int currentPage, int totalCount) {
 	number = totalCount - (currentPage -1) * blockCount;
 	
 }
+ 
 
-
-public pageDTO(int currentPage, int totalCount, String searchKey, String searchWord) {
+public PageDTO(int currentPage, int totalCount, String searchKey, String searchWord) {
    this(currentPage, totalCount);
    this.searchKey = searchKey;
    this.searchWord = searchWord;

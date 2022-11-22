@@ -5,7 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import dto.BoardDTO;
-import dto.pageDTO;
+import dto.PageDTO;
 
 public class BoardDaoImp  implements BoardDAO{
 	private SqlSessionTemplate sqlSession;
@@ -20,26 +20,24 @@ public class BoardDaoImp  implements BoardDAO{
 
 	@Override
 	public int count() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSession.selectOne("board.count");
 	}
 
 	@Override
-	public List<BoardDAO> list(pageDTO pv) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardDTO> list(PageDTO pv) {
+		return sqlSession.selectList("board.list",pv);
 	}
 
 	@Override
 	public void readCount(int num) {
-		// TODO Auto-generated method stub
+		sqlSession.update("board.readCount", num);
 		
 	}
 
 	@Override
 	public BoardDTO content(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("board.view", num);
 	}
 
 	@Override
@@ -50,7 +48,7 @@ public class BoardDaoImp  implements BoardDAO{
 
 	@Override
 	public void save(BoardDTO dto) {
-		// TODO Auto-generated method stub
+		sqlSession.insert("board.save",dto);
 		
 	}
 
@@ -74,8 +72,8 @@ public class BoardDaoImp  implements BoardDAO{
 
 	@Override
 	public String getFile(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sqlSession.selectOne("board.uploadFile", num);
 	}
 
 }

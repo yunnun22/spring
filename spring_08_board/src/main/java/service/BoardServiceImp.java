@@ -4,7 +4,7 @@ import java.util.List;
 
 import dao.BoardDAO;
 import dto.BoardDTO;
-import dto.pageDTO;
+import dto.PageDTO;
 
 public class BoardServiceImp implements BoardService{
 	private BoardDAO dao;
@@ -21,26 +21,29 @@ public class BoardServiceImp implements BoardService{
 
 	@Override
 	public int countProcess() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return dao.count();
 	}
 
 	@Override
-	public List<BoardDTO> listProcess(pageDTO tv) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<BoardDTO> listProcess(PageDTO pv) {	
+		return dao.list(pv);
 	}
 
 	@Override
 	public void insertProcess(BoardDTO dto) {
-		// TODO Auto-generated method stub
-		
+		//답변글이면
+		if(dto.getRef() != 0) {
+			dto.setRe_step(dto.getRe_step() + 1);
+			dto.setRe_level(dto.getRe_level() + 1);
+		}
+		dao.save(dto);
 	}
 
 	@Override
 	public BoardDTO contentProcess(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		dao.readCount(num);
+		return dao.content(num);
 	}
 
 	@Override
@@ -69,8 +72,7 @@ public class BoardServiceImp implements BoardService{
 
 	@Override
 	public String fileSelectProcess(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.getFile(num);
 	}
 
 	

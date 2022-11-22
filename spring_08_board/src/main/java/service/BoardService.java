@@ -3,12 +3,12 @@ package service;
 import java.util.List;
 
 import dto.BoardDTO;
-import dto.pageDTO;
+import dto.PageDTO;
 
 public interface BoardService {
 	
 	public int countProcess();
-	public  List<BoardDTO> listProcess(pageDTO tv);
+	public  List<BoardDTO> listProcess(PageDTO tv);
 	public  void insertProcess(BoardDTO dto);
 	public  BoardDTO contentProcess(int num);
 	public  void reStepProcess(BoardDTO dto);

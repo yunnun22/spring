@@ -3,12 +3,12 @@ package dao;
 import java.util.List;
 
 import dto.BoardDTO;
-import dto.pageDTO;
+import dto.PageDTO;
 
 public interface BoardDAO {
 
 	public int count();
-	public List<BoardDAO> list(pageDTO pv);
+	public List<BoardDTO> list(PageDTO pv);
 	public void readCount(int num);
 	public BoardDTO content(int num);
 	public void reStepCount(BoardDTO dto);
