@@ -13,7 +13,7 @@ public interface BoardService {
 	public  BoardDTO contentProcess(int num);
 	public  void reStepProcess(BoardDTO dto);
 	public BoardDTO updateSelectProcess(int num);
-	public  BoardDTO updateSelectProcess(BoardDTO dto, String urlpath);
+	public void updateProcess(BoardDTO dto, String urlpath);
 	public  void deleteProcess(int num, String urlpath);
 	public  String fileSelectProcess(int num);
 

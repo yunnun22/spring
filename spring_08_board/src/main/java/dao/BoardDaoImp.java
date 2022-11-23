@@ -42,7 +42,7 @@ public class BoardDaoImp  implements BoardDAO{
 
 	@Override
 	public void reStepCount(BoardDTO dto) {
-		// TODO Auto-generated method stub
+		sqlSession.update("board.reStepCount", dto);
 		
 	}
 
@@ -60,13 +60,13 @@ public class BoardDaoImp  implements BoardDAO{
 
 	@Override
 	public void update(BoardDTO dto) {
-		// TODO Auto-generated method stub
+		sqlSession.update("board.update",dto);
 		
 	}
 
 	@Override
 	public void delete(int num) {
-		// TODO Auto-generated method stub
+		sqlSession.delete("board.delete",num);
 		
 	}
 

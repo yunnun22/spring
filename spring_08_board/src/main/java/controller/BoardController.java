@@ -50,7 +50,6 @@ public class BoardController {
 
 			this.pdto = new PageDTO(this.currentPage, totalRecord);
 			List<BoardDTO> aList = service.listProcess(this.pdto);
-
 			mav.addObject("aList", aList);
 			mav.addObject("pv", this.pdto);
 
@@ -82,6 +81,8 @@ public class BoardController {
 		dto.setIp(request.getRemoteAddr());
 
 		service.insertProcess(dto);
+		
+		
 		// 답변글이면
 		if (dto.getRef() != 0) {
 			return "redirect:/list.sb?currentPage=" + pv.getCurrentPage();
@@ -91,6 +92,40 @@ public class BoardController {
 		}
 
 	}//
+	
+	@RequestMapping(value = "/update.sb", method = RequestMethod.GET)
+	public ModelAndView updateMethod(int num, int currentPage, ModelAndView mav) {
+		mav.addObject("dto", service.updateSelectProcess(num));
+		mav.addObject("currentPage", currentPage);
+		mav.setViewName("board/update");
+		return mav;
+	}//updateMethod
+	
+	@RequestMapping(value = "/update.sb", method = RequestMethod.POST)
+	public String updateProMethod(BoardDTO dto, int currentPage, HttpServletRequest request) {
+		MultipartFile file = dto.getFilename();
+		if(!file.isEmpty()) {
+			UUID random = saveCopyFile(file, request);
+			dto.setUpload(random + "_" + file.getOriginalFilename());
+		}
+		
+		service.updateProcess(dto, urlPath(request));
+		return "redirect:/list.sb?currentPage=" + currentPage;
+	}//updateProMethod
+	
+@RequestMapping("/delete.sb")
+	public String deleteMethod(int num, int currentPage, HttpServletRequest request) {
+		service.deleteProcess(num, urlPath(request));
+		
+	    int totalRecord = service.countProcess();
+	    this.pdto = new PageDTO(this.currentPage, totalRecord);
+	    
+		return "redirect:/list.sb?currentPage=" + this.pdto.getCurrentPage();
+	}//deleteMethod
+	
+	
+	
+	
 
 	private UUID saveCopyFile(MultipartFile file, HttpServletRequest request) {
 		String fileName = file.getOriginalFilename();
@@ -137,7 +172,7 @@ public class BoardController {
 		mav.setViewName("download");
 		return mav;
 		
-	}
+	}//downMethod
 	
 
 }// class
