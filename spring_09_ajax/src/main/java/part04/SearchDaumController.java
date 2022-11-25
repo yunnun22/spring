@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //http://localhost:8090/myapp/booksearch.do
 
 @Controller
-public class SearchDaumController {
+public class SearchDaumController { 
 
 	public SearchDaumController() {
 		
